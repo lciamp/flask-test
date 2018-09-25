@@ -5,7 +5,7 @@ from db import db
 
 class BaseTest(TestCase):
     def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.testing = True
         with app.app_context():
