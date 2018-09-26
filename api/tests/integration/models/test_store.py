@@ -15,19 +15,19 @@ class StoreTest(BaseTest):
             store = StoreModel('Test')
 
             self.assertIsNone(store.find_by_name('Test'),
-                              "Found an store with name '{}', but expected not to.".format(store.name))
+                              "Found a store with name '{}', but expected not to.".format(store.name))
 
             store.save_to_db()
 
             self.assertIsNotNone(store.find_by_name('Test'),
-                                 "Did not find an store with name '{}', but expected to.".format(store.name))
+                                 "Did not find a store with name '{}', but expected to.".format(store.name))
 
             store.delete_from_db()
 
             self.assertIsNone(store.find_by_name('Test'),
-                              "Found an store with name '{}', but expected not to.".format(store.name))
+                              "Found a store with name '{}', but expected not to.".format(store.name))
 
-    def test_store_relationship(self):
+    def test_item_relationship(self):
         with self.app_context():
             store = StoreModel('Test Store')
             item = ItemModel('Test', 19.99, 1)
