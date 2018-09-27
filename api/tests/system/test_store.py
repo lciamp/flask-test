@@ -82,10 +82,10 @@ class StoreTest(BaseTest):
     def test_store_list_with_items(self):
         with self.app() as client:
             with self.app_context():
-                item = ItemModel('Test Item', 19.99,1 )
                 store = StoreModel('Test')
                 store.save_to_db()
-                item.save_to_db()
+                ItemModel('Test Item', 19.99, 1).save_to_db()
+
                 response = client.get('/stores')
                 self.assertEqual(response.status_code, 200)
                 self.assertDictEqual(json.loads(response.data),
