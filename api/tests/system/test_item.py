@@ -6,15 +6,20 @@ import json
 
 
 class ItemTest(BaseTest):
-    def test_get_item_with_auth(self):
+    def setUp(self):
+        super(ItemTest, self).setUp()
         with self.app() as client:
             with self.app_context():
                 UserModel('test', 'password').save_to_db()
                 auth_response = client.post('/auth',
                                             data=json.dumps({'username': 'test', 'password': 'password'}),
                                             headers={'Content-Type': 'application/json'})
-                token = json.loads(auth_response.data).get('access_token')
-                headers = {'Authorization': 'JWT {}'.format(token)}
+                self.token = 'JWT {}'.format(json.loads(auth_response.data).get('access_token'))
+
+    def test_get_item_with_auth(self):
+        with self.app() as client:
+            with self.app_context():
+                headers = {'Authorization': self.token}
 
                 ItemModel('test', 19.99, 1).save_to_db()
                 response = client.get('/item/test',
