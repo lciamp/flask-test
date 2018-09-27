@@ -11,47 +11,44 @@ class StoreTest(BaseTest):
                              "Store items length was not zero even though no items were added.")
 
     def test_crud(self):
-        with self.app_context():
-            store = StoreModel('Test')
+        store = StoreModel('Test')
 
-            self.assertIsNone(store.find_by_name('Test'),
-                              "Found a store with name '{}', but expected not to.".format(store.name))
+        self.assertIsNone(store.find_by_name('Test'),
+                          "Found a store with name '{}', but expected not to.".format(store.name))
 
-            store.save_to_db()
+        store.save_to_db()
 
-            self.assertIsNotNone(store.find_by_name('Test'),
-                                 "Did not find a store with name '{}', but expected to.".format(store.name))
+        self.assertIsNotNone(store.find_by_name('Test'),
+                             "Did not find a store with name '{}', but expected to.".format(store.name))
 
-            store.delete_from_db()
+        store.delete_from_db()
 
-            self.assertIsNone(store.find_by_name('Test'),
-                              "Found a store with name '{}', but expected not to.".format(store.name))
+        self.assertIsNone(store.find_by_name('Test'),
+                          "Found a store with name '{}', but expected not to.".format(store.name))
 
     def test_item_relationship(self):
-        with self.app_context():
-            store = StoreModel('Test Store')
-            item = ItemModel('Test', 19.99, 1)
+        store = StoreModel('Test Store')
+        item = ItemModel('Test', 19.99, 1)
 
-            store.save_to_db()
-            item.save_to_db()
+        store.save_to_db()
+        item.save_to_db()
 
-            self.assertEqual(store.items.count(), 1)
-            self.assertEqual(store.items.first().name, item.name)
+        self.assertEqual(store.items.count(), 1)
+        self.assertEqual(store.items.first().name, item.name)
 
     def test_store_json_with_item(self):
-        with self.app_context():
-            store = StoreModel('Test Store')
-            item = ItemModel('Test', 19.99, 1)
+        store = StoreModel('Test Store')
+        item = ItemModel('Test', 19.99, 1)
 
-            store.save_to_db()
-            item.save_to_db()
+        store.save_to_db()
+        item.save_to_db()
 
-            expected = {
-                'name': 'Test Store',
-                'items': [{'name': 'Test', 'price': 19.99}]
-            }
+        expected = {
+            'name': 'Test Store',
+            'items': [{'name': 'Test', 'price': 19.99}]
+        }
 
-            self.assertEqual(store.json(), expected)
+        self.assertEqual(store.json(), expected)
 
 
 

@@ -16,10 +16,11 @@ class BaseTest(TestCase):
     def setUp(self):
         with app.app_context():
             db.create_all()
-        self.app = app.test_client
-        self.app_context = app.app_context
+        self.client = app.test_client()
+        self.app_context = app.app_context()
+        self.app_context.push()
 
     def tearDown(self):
-        with app.app_context():
-            db.session.remove()
-            db.drop_all()
+        db.session.remove()
+        db.drop_all()
+        self.app_context.pop()
