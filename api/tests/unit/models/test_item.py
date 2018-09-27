@@ -1,6 +1,6 @@
 from unittest import TestCase
-from models.item import ItemModel
-from models.store import StoreModel
+from api.models.item import ItemModel
+from api.models.store import StoreModel
 
 
 class ItemTest(TestCase):

@@ -4,10 +4,10 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT, JWTError
 
-from security import authenticate, identity
-from resources.item import Item, ItemList
-from resources.store import Store, StoreList
-from resources.user import UserRegister
+from api.security import authenticate, identity
+from api.resources.item import Item, ItemList
+from api.resources.store import Store, StoreList
+from api.resources.user import UserRegister
 
 app = Flask(__name__)
 
@@ -32,6 +32,14 @@ api.add_resource(UserRegister, '/register')
 @app.errorhandler(JWTError)
 def auth_error(err):
     return jsonify({'message': 'Could not authorize. Did you include a valid Authorization header?'}), 401
+
+
+@app.cli.command()
+def test():
+    """Run Unit Test"""
+    import unittest
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
 
 
 if __name__ == '__main__':

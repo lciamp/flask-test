@@ -1,5 +1,5 @@
 from api.tests.base_test import BaseTest
-from models.user import UserModel
+from api.models.user import UserModel
 
 
 class UserTest(BaseTest):

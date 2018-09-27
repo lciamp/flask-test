@@ -1,5 +1,5 @@
 from unittest import TestCase
-from models.user import UserModel
+from api.models.user import UserModel
 
 
 class UserTest(TestCase):

@@ -1,5 +1,5 @@
-from models.store import StoreModel
-from models.item import ItemModel
+from api.models.store import StoreModel
+from api.models.item import ItemModel
 from api.tests.base_test import BaseTest
 import json
 
