@@ -1,14 +1,14 @@
 from models.user import UserModel
 from api.tests.base_test import BaseTest
 import json
-from flask import jsonify
 
 
 class UserTest(BaseTest):
     def test_register_user(self):
         with self.app() as client:
             with self.app_context():
-                response = client.post('/register', data={'username': 'test', 'password': 'password'})
+                response = client.post('/register',
+                                       data={'username': 'test', 'password': 'password'})
                 self.assertEqual(response.status_code, 201)
                 self.assertIsNotNone(UserModel.find_by_username('test'))
                 expected = {"message": "User created successfully."}
