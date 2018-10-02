@@ -35,12 +35,7 @@ class ItemTest(BaseTest):
         self.assertDictEqual(json.loads(response.data), expected)
 
     def test_get_item_not_found(self):
-        UserModel('test', 'password').save_to_db()
-        auth_response = self.client.post('/auth',
-                                         data=json.dumps({'username': 'test', 'password': 'password'}),
-                                         headers={'Content-Type': 'application/json'})
-        token = json.loads(auth_response.data).get('access_token')
-        headers = {'Authorization': 'JWT {}'.format(token)}
+        headers = {'Authorization': self.token}
 
         response = self.client.get('/item/test', headers=headers)
 

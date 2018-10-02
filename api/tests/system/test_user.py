@@ -6,7 +6,8 @@ import json
 class UserTest(BaseTest):
     def test_register_user(self):
         response = self.client.post('/register',
-                                    data={'username': 'test', 'password': 'password'})
+                                    data=json.dumps({'username': 'test', 'password': 'password'}),
+                                    headers={'Content-Type': 'application/json'})
         self.assertEqual(response.status_code, 201)
         self.assertIsNotNone(UserModel.find_by_username('test'))
         expected = {"message": "User created successfully."}
@@ -23,7 +24,8 @@ class UserTest(BaseTest):
         user = UserModel('test', 'password')
         user.save_to_db()
         response = self.client.post('/register',
-                                    data={'username': 'test', 'password': 'password'})
+                                    data=json.dumps({'username': 'test', 'password': 'password'}),
+                                    headers={'Content-Type': 'application/json'})
         self.assertEqual(response.status_code, 400)
         expected = {"message": "A user with that username already exists"}
         self.assertDictEqual(expected, json.loads(response.data))
