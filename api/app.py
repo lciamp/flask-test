@@ -4,22 +4,28 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT, JWTError
 
-from api.security import authenticate, identity
-from api.resources.item import Item, ItemList
-from api.resources.store import Store, StoreList
-from api.resources.user import UserRegister
+from security import authenticate, identity
+from resources.item import Item, ItemList
+from resources.store import Store, StoreList
+from resources.user import UserRegister
+
 
 app = Flask(__name__)
 
 app.config['DEBUG'] = True
-
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'secret'
+
+@app.route('/')
+def index():
+    return jsonify(msg="This is an index page, please use API endpoints")
+
 api = Api(app)
 
 jwt = JWT(app, authenticate, identity)  # /auth
+
 
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')

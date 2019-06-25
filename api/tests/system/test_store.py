@@ -3,7 +3,7 @@ from api.models.item import ItemModel
 from api.tests.base_test import BaseTest
 import json
 
-
+from base64 import b64encode
 class StoreTest(BaseTest):
     def test_create_store(self):
         response = self.client.post('/store/Test')
