@@ -18,9 +18,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'secret'
 
+
 @app.route('/')
 def index():
     return jsonify(msg="This is an index page, please use API endpoints")
+
 
 api = Api(app)
 
